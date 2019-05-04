@@ -1,0 +1,15 @@
+#!/usr/bin/env php
+<?php
+
+require_once 'Summarizer.php';
+
+if (empty($repositories = Summarizer::findRepositories())) {
+	throw new RuntimeException('Folder `repositories` does not contain any GIT repository.');
+}
+
+$contributions = Summarizer::exportContributionsDates($repositories);
+
+echo '<pre>';
+	print_r ($contributions);
+echo '</pre>';
+die();
