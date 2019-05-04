@@ -17,10 +17,10 @@
 			display: block;
 			width: 30px;
 			height: 30px;
-			background-color: #2f630e;
+			background-color: #6893EE;
 			text-align: center;
 			font-size: 14px;
-			color: white;
+			color: #151b30;
 			line-height: 30px;
 		}
 		.contributions- {
@@ -34,28 +34,32 @@
 		.contributions-3,
 		.contributions-4,
 		.contributions-5 {
-			background-color: #84D466;
+			background-color: #D0DFFE;
+			color: #151b30;
 		}
 		.contributions-6,
 		.contributions-7,
 		.contributions-8,
 		.contributions-9,
 		.contributions-10 {
-			background-color: #66C71D;
+			background-color: #C1D4FB;
+			color: #151b30;
 		}
 		.contributions-11,
 		.contributions-12,
 		.contributions-13,
 		.contributions-14,
 		.contributions-15 {
-			background-color: #4F9D13;
+			background-color: #A8C2FB;
+			color: #151b30;
 		}
 		.contributions-16,
 		.contributions-17,
 		.contributions-18,
 		.contributions-19,
 		.contributions-20 {
-			background-color: #3E7D11;
+			background-color:#86ABFA;
+			color: #151b30;
 		}
 		.d-inline-block {
 			display: inline-block;
@@ -77,6 +81,7 @@
 </head>
 <body>
 	<?php
+		$total = 0;
 		foreach ($calendar as $year => $months) {
 		    echo '<h1>' . $year . '</h1>';
 
@@ -97,6 +102,7 @@
 					echo '<tr>';
 						echo '<th class="month">' . date('F', mktime(0, 0, 0, $month, 1)) . '</th>';
 						foreach ($days as $day => $count) {
+                            $total += $count;
                             echo '<td class="day">';
                             	echo '<span class="contributions-' . $count . '">' . ($count ? $count : '') . '</span>';
 							echo '</td>';
@@ -109,6 +115,7 @@
 					echo '<td colspan="31">';
 					?>
 					<div class="m-t-30">
+						<span class="d-inline-block legend-block p-r-5"><strong>LEGEND: </strong></span>
 						<span class="d-inline-block legend-block p-r-5">LESS</span>
 						<span class="contributions-0 d-inline-block"></span>
 						<span class="contributions-5 d-inline-block"></span>
@@ -125,6 +132,7 @@
             echo '</table>';
 		}
 
+		echo '<div class="m-t-30"><strong>TOTAL:</strong> ' . $total . ' commits</div>';
 	?>
 </body>
 </html>
