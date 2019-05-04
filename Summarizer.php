@@ -72,4 +72,41 @@ class Summarizer
     private static function sortDate(DateTimeImmutable $lpha, DateTimeImmutable $beta) {
         return $lpha->getTimestamp() - $beta->getTimestamp();
     }
+
+    /**
+     * @param array|DateTimeImmutable[] $dates
+     * @return array
+     */
+    public static function prepareCalendar(array $dates): array
+    {
+        $calendar = [];
+        $start = reset($dates)->modify('first day of this month');
+        $end = end($dates)->modify('last day of this month');
+        $next = clone $start;
+
+        do {
+            $year = $next->format('Y');
+            if (! array_key_exists($year, $calendar)) {
+                $calendar[$year] = [];
+            }
+
+            $month = $next->format('m');
+            if (! array_key_exists($month, $calendar[$year])) {
+                $calendar[$year][$month] = [];
+            }
+
+            $day = $next->format('d');
+            if (! array_key_exists($day, $calendar[$year][$month])) {
+                $calendar[$year][$month][$day] = 0;
+            }
+
+            $next = $next->modify('+ 1 day');
+        } while ($next < $end);
+
+        foreach ($dates as $date) {
+            ++ $calendar[$date->format('Y')][$date->format('m')][$date->format('d')];
+        }
+
+        return $calendar;
+    }
 }

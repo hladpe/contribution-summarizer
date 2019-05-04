@@ -7,9 +7,8 @@ if (empty($repositories = Summarizer::findRepositories())) {
 	throw new RuntimeException('Folder `repositories` does not contain any GIT repository.');
 }
 
-$contributions = Summarizer::exportContributionsDates($repositories);
+$calendar = Summarizer::prepareCalendar(Summarizer::exportContributionsDates($repositories));
 
-echo '<pre>';
-	print_r ($contributions);
-echo '</pre>';
-die();
+ob_start();
+include 'template.php';
+file_put_contents('outputs/output.html', ob_get_clean());
